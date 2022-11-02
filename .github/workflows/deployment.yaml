@@ -32,6 +32,10 @@ jobs:
         run: npm test
       - name: Upload test report
         if: failure() && steps.tun-tests.outcome == 'failure'
+        uses: actions/upload-artifact@v3
+        with: 
+          name: test-report
+          path: test.json
       - name: Output information
         run: |
           echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
