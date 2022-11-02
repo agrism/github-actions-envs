@@ -7,6 +7,19 @@ on:
 env:
   MONGODB_DB_NAME: gha-demo
 jobs:
+  lint:
+    environment: TEST
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ./npm
+          key: npm-deps-${{ hashFiles('**package-lock.json')}}
+      - name: Do some dummy lint
+        run: echo "do dome dymmy lint"
   test:
     environment: TEST
     env:
@@ -47,3 +60,11 @@ jobs:
         run: |
           echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
           echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
+  report:
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+      - name: Output information
+        run: |
+          echo "Something went wrong"
+          echo "${{ github }}"
