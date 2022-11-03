@@ -21,7 +21,8 @@ runs:
         key: composer-deps-${{ hashFiles('**composer.lock')}}
     - name: Install dependencies
       if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
+      shell: bash
       run: |
         composer install
-        echo "::set-output name=cache::'${{ inputs.caching }}'"
-      shell: bash
+        echo "cache='${{ inputs.caching }}'" >> $GITHUB_OUTPUT
+        shell: bash
