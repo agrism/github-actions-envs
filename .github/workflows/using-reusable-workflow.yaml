@@ -76,7 +76,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: composer install
       - name: Copy files to artifact destination
-        run: cp -r . ./dist
+        run: cp -r . dist
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
