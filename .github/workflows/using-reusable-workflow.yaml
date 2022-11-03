@@ -50,22 +50,21 @@ jobs:
         id: run-tests
         run: ./vendor/bin/phpunit
       - name: Upload test report
-        if: failure() && steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with: 
-          name: test-report
-          path: test.json
+          name: test-files
+          path: dist
       - name: Output information
         run: |
           echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Output information
-        run: |
-          echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
-          echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
+#  deploy:
+#    needs: test
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Output information
+#        run: |
+#          echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
+#          echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
   build:
     needs: test
     uses: ./.github/workflows/reusable.yaml
