@@ -49,11 +49,6 @@ jobs:
       - name: Run tests
         id: run-tests
         run: ./vendor/bin/phpunit
-      - name: Upload test report
-        uses: actions/upload-artifact@v3
-        with: 
-          name: dist-files
-          path: dist
       - name: Output information
         run: |
           echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
@@ -66,6 +61,26 @@ jobs:
 #          echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME }}"
 #          echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
   build:
+    needs: [test, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: npm-deps-${{ hashFiles('**composer.lock')}}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: composer install
+      - name: Create artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: dist
+  deploy:
     needs: test
     uses: ./.github/workflows/reusable.yaml
     with:
