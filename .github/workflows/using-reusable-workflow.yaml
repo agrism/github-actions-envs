@@ -28,15 +28,8 @@ jobs:
     steps: 
       - name: Get code
         uses: actions/checkout@v3
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: npm-deps-${{ hashFiles('**composer.lock')}}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: composer install
+      - name: Load & cache dependencies
+        uses: ./.github/actions/cache-deps
       - name: Run server
         run: echo "run server"
       - name: Run tests
@@ -51,15 +44,8 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: npm-deps-${{ hashFiles('**composer.lock')}}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: composer install
+      - name: Load & cache dependencies
+        uses: ./.github/actions/cache-deps
       - name: Copy files to artifact destination
         run: |
           cp -r ./src ./dist
