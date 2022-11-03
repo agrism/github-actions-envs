@@ -13,15 +13,8 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: npm-deps-${{ hashFiles('**composer.lock')}}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: composer install
+      - name: Load & cache dependencies
+        uses: ./.github/actions/cache-deps
       - name: Do some dummy lint
         run: echo "do dome dummy lint"
   test:
