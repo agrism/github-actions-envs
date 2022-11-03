@@ -83,7 +83,7 @@ jobs:
     with:
       artifact-name: dist-files
     #secrets:
-      s#ome-secrets: ${{ secrets.some-secret }}
+      #ome-secrets: ${{ secrets.some-secret }}
   print-deploy-report:
     needs: deploy
     runs-on: ubuntu-latest
