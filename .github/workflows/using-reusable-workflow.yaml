@@ -15,8 +15,11 @@ jobs:
         uses: actions/checkout@v3
       - name: Load & cache dependencies
         uses: ./.github/actions/cache-deps
+        id: cache-deps
         with:
           caching: 'false'
+      - name: Output information
+        run: echo "Cache used? ${{ steps.cache-deps.outputs.used-cache }}
       - name: Do some dummy lint
         run: echo "do dome dummy lint"
   test:
