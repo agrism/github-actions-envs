@@ -52,7 +52,7 @@ jobs:
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with: 
-          name: test-files
+          name: dist-files
           path: dist
       - name: Output information
         run: |
