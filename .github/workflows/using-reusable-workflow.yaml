@@ -19,7 +19,7 @@ jobs:
         with:
           caching: 'false'
       - name: Output information
-        run: echo "Cache used? ${{ steps.cache-deps.outputs.used-cache }}"
+        run: echo "Cache used? ${{ steps.cache-deps.outputs.used-cache.value }}"
       - name: Do some dummy lint
         run: echo "do dome dummy lint"
   test:
