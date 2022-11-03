@@ -22,6 +22,6 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
       - name: Install dependencies
-        run:
+        run: echo "installing dummy...."
       - name: Build project
         run: echo "build dummy...."

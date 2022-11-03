@@ -17,13 +17,13 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: node_modules
-          key: npm-deps-${{ hashFiles('**package-lock.json')}}
+          path: vendor
+          key: npm-deps-${{ hashFiles('**composer.lock')}}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+        run: composer install
       - name: Do some dummy lint
-        run: echo "do dome dymmy lint"
+        run: echo "do dome dummy lint"
   test:
     environment: TEST
     env:
@@ -39,16 +39,16 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: node_modules
-          key: npm-deps-${{ hashFiles('**package-lock.json')}}
+          path: vendor
+          key: npm-deps-${{ hashFiles('**composer.lock')}}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+        run: composer install
       - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:$PORT
+        run: echo "run server"
       - name: Run tests
         id: run-tests
-        run: npm test
+        run: ./vendor/bin/phpunit
       - name: Upload test report
         if: failure() && steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v3

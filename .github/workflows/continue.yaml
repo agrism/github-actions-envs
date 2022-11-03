@@ -45,7 +45,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: composer install
       - name: Run server
-        run: php -S localhost:$PORT
+        run: echo "run"
       - name: Run tests
         continue-on-error: true
         id: run-tests
