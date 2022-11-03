@@ -20,6 +20,7 @@ runs:
         path: vendor
         key: composer-deps-${{ hashFiles('**composer.lock')}}
     - name: Install dependencies
+      id: install
       if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
       run: |
         composer install
