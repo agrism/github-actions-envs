@@ -8,8 +8,8 @@ jobs:
         php-version: [7.4, 8.0, 8.1]
         operation-system: [ubuntu-latest, windows-latest]
         include:
-          - php-version: [ubuntu-latest]
-            operation-system: 7.3
+          - php-version: 7.3
+            operation-system: [ubuntu-latest]
         exclude:
           - php-version: 8.2
             operation-system: windows-latest
