@@ -5,23 +5,23 @@ jobs:
     continue-on-error: true
     strategy:
       matrix: 
-        node-version: [12, 14, 16]
+        php-version: [7.4, 8.0, 8.1]
         operation-system: [ubuntu-latest, windows-latest]
         include:
-          - node-version: [ubuntu-latest]
-            operation-system: 18
+          - php-version: [ubuntu-latest]
+            operation-system: 7.3
         exclude:
-          - node-version: 12
-            operation-system: ubuntu-latest
+          - php-version: 8.2
+            operation-system: windows-latest
     runs-on: ${{ matrix.operation-system }}
     steps:
       - name: Get code
         uses: actions/checkout@v3
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependecies
-        run: npm ci
+          php-version: ${{ matrix.php-version }}
+      - name: Install dependencies
+        run:
       - name: Build project
-        run: npm run test
+        run: echo "build dummy...."
